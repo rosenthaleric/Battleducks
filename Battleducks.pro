@@ -25,13 +25,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    board.cpp \
+    duck.cpp \
+    tile.cpp \
+    boardview.cpp
 
 HEADERS += \
         mainwindow.h \
     board.h \
     tile.h \
-    duck.h
+    duck.h \
+    boardview.h
 
 FORMS += \
         mainwindow.ui
+
+RESOURCES += \
+    resource.qrc

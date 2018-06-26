@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/resources">
+        <file>assets/water_tile.jpg</file>
+    </qresource>
+</RCC>
