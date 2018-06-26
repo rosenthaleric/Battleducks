@@ -18,6 +18,7 @@ public:
     int getStatus();
     void setDuck(Duck*);
     Duck* getDuck();
+    Duck* shootDuck();
 
 private:
     /**
@@ -46,6 +47,11 @@ void Tile::setDuck(Duck* newDuck) {
 }
 
 Duck* Tile::getDuck() {
+    return duck_;
+}
+
+Duck* Tile::shootDuck() {
+    duck_->popDuck(index_);
     return duck_;
 }
 
