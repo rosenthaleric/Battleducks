@@ -16,7 +16,8 @@ public:
 
     void setStatus(int);
     int getStatus();
-    void setShip(Ship*);
+    void setDuck(Duck*);
+    Duck* getDuck();
 
 private:
     /**
@@ -27,7 +28,7 @@ private:
      */
     int index_;
     int status_ = 0;
-    Ship* ship_;
+    Duck* duck_;
 };
 
 Tile::Tile(int i, int s) : status_(s) {}
@@ -40,8 +41,12 @@ void Tile::setStatus(int newStatus) {
     status_ = newStatus;
 }
 
-void Tile::setDuck(Ship* newShip) {
-    ship_ = newShip;
+void Tile::setDuck(Duck* newDuck) {
+    duck_ = newDuck;
+}
+
+Duck* Tile::getDuck() {
+    return duck_;
 }
 
 #endif // TILE_H
