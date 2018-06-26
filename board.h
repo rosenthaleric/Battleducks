@@ -1,4 +1,5 @@
 #include <vector>
+#include <set>
 #include "tile.h"
 
 class Board
@@ -11,11 +12,11 @@ public:
     bool shootable(int);
 private:
     std::vector<Tile> tiles_;
-    std::vector<Duck> ducks_;
+    std::set<Duck> ducks_;
 };
 
 Board::Board(){
-    ducks_ = new std::vector<Duck>();
+    ducks_ = new std::set<Duck>();
     tiles_ = new std::vector<Tile>(100);
     for(int i = 0; i < 100; i++) {
         tiles_[i] = new Tile();
@@ -38,8 +39,9 @@ void Board::setDuck(int index, int length) {
         Tile* tile = tiles_[i];
         // set status to duck
         *tile->setStatus(1);
-        ducks_.push_back(new Duck(index, length));
-        *tile->setDuck(ducks_[ducks_.length() - 1]);
+        Duck* duck = new Duck(index, length);
+        ducks_.insert(*duck);
+        *tile->setDuck(*duck);
     }
 }
 
@@ -51,5 +53,13 @@ bool Board::shootable(int index) {
 }
 
 void Board::shoot(int index) {
-
+    int status = tiles_[index].getStatus();
+    if(status == 0) {
+        tiles_[index].setStatus(2);
+        return;
+    }
+    Duck* duck = tiles_[index].shootDuck();
+    if(*duck->isDestroyed()) {
+        ducks_.erase(*duck);
+    }
 }
