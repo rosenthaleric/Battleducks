@@ -10,10 +10,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // CONFIG
     QGraphicsScene* scene = new QGraphicsScene(this);
     BoardView* board_0 = new BoardView(scene);
-    board_0->drawBoard();
 
+    // DRAW EMPTY BOARD
+    board_0->drawBoard();
     ui->graphicsView->setScene(scene);
 }
 

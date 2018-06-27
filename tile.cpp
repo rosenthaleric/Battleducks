@@ -1,5 +1,5 @@
 #include "tile.h"
-#include "duck.h"
+#include "duckfamily.h"
 
 /**
  *  Represents a tile on the gameboard with a designated index.
@@ -23,15 +23,15 @@ void Tile::setStatus(int newStatus) {
     status_ = newStatus;
 }
 
-void Tile::setDuck(Duck* newDuck) {
+void Tile::setDuck(DuckFamily* newDuck) {
     duck_ = newDuck;
 }
 
-Duck* Tile::getDuck() {
+DuckFamily* Tile::getDuck() {
     return duck_;
 }
 
-Duck* Tile::shootDuck() {
+DuckFamily* Tile::shootDuck() {
     duck_->popDuck(index_);
     return duck_;
 }

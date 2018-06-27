@@ -1,9 +1,21 @@
 #include "board.h"
 #include "tile.h"
-#include "duck.h"
+#include "duckfamily.h"
 
 #include <vector>
 #include <set>
+
+/**
+ * Represents a board entity.
+ * A board contains a tiles- and a ducks container.
+ * This class is responsible for checking if a duckFamily of a certain length
+ * can be placed on the board, setting duckfamilies and adding them to the boards
+ * container, shooting tiles (propagating shoot() to Tiles Object if there is
+ * a duck) and setting their status.
+ *
+ * DuckFamilies return a destroyed status. If true, the corresponding duckFamily is erased
+ * from the boards duck container, relevant for the game progress.
+ */
 
 Board::Board(){
     for(int i = 0; i < 100; i++) {
@@ -27,8 +39,8 @@ void Board::setDuck(int index, int length) {
         Tile* tile = tiles_[i];
         // set status to duck
         tile->setStatus(1);
-        Duck* duck = new Duck(index, length);
-        ducks_.insert(duck);
+        DuckFamily* duck = new DuckFamily(index, length);
+        duckFamilies_.insert(duck);
         tile->setDuck(duck);
     }
 }
@@ -46,8 +58,8 @@ void Board::shoot(int index) {
         tiles_[index]->setStatus(2);
         return;
     }
-    Duck* duck = tiles_[index]->shootDuck();
-    if(duck->isDestroyed()) {
-        ducks_.erase(duck);
+    DuckFamily* duckFamily = tiles_[index]->shootDuck();
+    if(duckFamily->isDestroyed()) {
+        duckFamilies_.erase(duckFamily);
     }
 }

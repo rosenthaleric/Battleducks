@@ -1,5 +1,5 @@
 #include "tile.h"
-#include "duck.h"
+#include "duckfamily.h"
 
 #include <vector>
 #include <set>
@@ -14,5 +14,5 @@ public:
     bool shootable(int);
 private:
     std::vector<Tile*> tiles_;
-    std::set<Duck*> ducks_;
+    std::set<DuckFamily*> duckFamilies_;
 };

@@ -27,16 +27,16 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     board.cpp \
-    duck.cpp \
     tile.cpp \
-    boardview.cpp
+    boardview.cpp \
+    duckfamily.cpp
 
 HEADERS += \
         mainwindow.h \
     board.h \
     tile.h \
-    duck.h \
-    boardview.h
+    boardview.h \
+    duckfamily.h
 
 FORMS += \
         mainwindow.ui

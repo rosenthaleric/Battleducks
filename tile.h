@@ -1,4 +1,4 @@
-#include "duck.h"
+#include "duckfamily.h"
 
 #ifndef TILE_H
 #define TILE_H
@@ -10,14 +10,14 @@ public:
 
     void setStatus(int);
     int getStatus();
-    void setDuck(Duck*);
-    Duck* getDuck();
-    Duck* shootDuck();
+    void setDuck(DuckFamily*);
+    DuckFamily* getDuck();
+    DuckFamily* shootDuck();
 
 private:
     int index_;
     int status_ = 0;
-    Duck* duck_;
+    DuckFamily* duck_;
 };
 
 #endif // TILE_H

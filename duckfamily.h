@@ -3,10 +3,10 @@
 
 #include <vector>
 
-class Duck
+class DuckFamily
 {
 public:
-    Duck(int start, int l);
+    DuckFamily(int start, int l);
 
     void popDuck(int pos);
     bool contains(int i);
