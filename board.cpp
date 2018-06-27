@@ -45,6 +45,9 @@ void Board::setDuck(int index, int length) {
     }
 }
 
+int Board::getTileStatus(int x, int y) {
+    return tiles_[x + y * 10]->getStatus();
+}
 bool Board::shootable(int index) {
     // check if index is in board
     if(index > 99 || index < 0) return false;

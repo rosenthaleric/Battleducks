@@ -6,16 +6,18 @@
 #include <QGraphicsView>
 #include <QPixmap>
 
+#include "board.h"
+
 class BoardView
 {
 public:
     BoardView(QGraphicsScene* scene);
-
     void drawBoard();
 
 private:
     QGraphicsScene* scene_;
-    QPixmap water_tile_;
+    Board board_;
+    std::vector<QPixmap> tiles_;
 };
 
 #endif // BOARDVIEW_H
