@@ -1,6 +1,7 @@
 #include "board.h"
 #include "tile.h"
 #include "duckfamily.h"
+#include <iostream>
 
 #include <vector>
 #include <set>
@@ -19,7 +20,8 @@
 
 Board::Board(){
     for(int i = 0; i < 100; i++) {
-        tiles_.push_back(new Tile());
+        Tile* tile = new Tile(0);
+        tiles_.push_back(tile);
     }
 }
 

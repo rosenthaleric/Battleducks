@@ -8,16 +8,21 @@
 
 #include "board.h"
 
-class BoardView
+class BoardView : public QGraphicsScene
 {
+    Q_OBJECT
 public:
-    BoardView(QGraphicsScene* scene);
+    BoardView(QObject *parent = 0);
     void drawBoard();
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
 private:
     QGraphicsScene* scene_;
     Board board_;
-    std::vector<QPixmap> tiles_;
+    std::vector<QPixmap> tiles_textures_;
+    std::vector<QGraphicsPixmapItem*> tiles_;
 };
 
 #endif // BOARDVIEW_H

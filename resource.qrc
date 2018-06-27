@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/resources">
         <file>assets/water_tile.jpg</file>
+        <file>assets/water_tile_destroyed.jpg</file>
     </qresource>
 </RCC>
