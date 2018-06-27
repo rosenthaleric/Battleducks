@@ -1,5 +1,5 @@
-#ifndef DUCK_H
-#define DUCK_H
+#ifndef DUCKFAMILY_H
+#define DUCKFAMILY_H
 
 #include <vector>
 
@@ -18,4 +18,4 @@ private:
     bool destroyed_;
 };
 
-#endif // DUCK_H
+#endif // DUCKFAMILY_H

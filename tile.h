@@ -1,7 +1,7 @@
-#include "duckfamily.h"
-
 #ifndef TILE_H
 #define TILE_H
+
+#include "duckfamily.h"
 
 class Tile
 {

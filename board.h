@@ -1,3 +1,6 @@
+#ifndef BOARD_H
+#define BOARD_H
+
 #include "tile.h"
 #include "duckfamily.h"
 
@@ -17,3 +20,4 @@ private:
     std::vector<Tile*> tiles_;
     std::set<DuckFamily*> duckFamilies_;
 };
+#endif // BOARD_H

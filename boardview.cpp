@@ -15,8 +15,8 @@
 
 BoardView::BoardView(QGraphicsScene* scene) {
     scene_ = scene;
-    board_ = new Board();
-    tiles_ = new std::vector<QPixmap>(4);
+    board_ = Board();
+    tiles_ = std::vector<QPixmap>(4);
     tiles_[0] = QPixmap(":/resources/assets/water_tile.jpg").scaled(QSize(25, 25));
 }
 
