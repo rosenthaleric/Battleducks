@@ -36,7 +36,8 @@ HEADERS += \
     board.h \
     tile.h \
     boardview.h \
-    duckfamily.h
+    duckfamily.h \
+    game.h
 
 FORMS += \
         mainwindow.ui
