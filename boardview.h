@@ -16,7 +16,7 @@ public:
     void drawBoard();
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 
 private:
     QGraphicsScene* scene_;

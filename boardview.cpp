@@ -4,6 +4,8 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
+#include <QGraphicsSceneMouseEvent>
+#include <iostream>
 
 #include "board.h"
 #include "boardView.h"
@@ -14,7 +16,6 @@
  */
 
 BoardView::BoardView(QObject *parent) : QGraphicsScene(parent) {
-    //scene_ = scene;
     board_ = Board();
     tiles_ = std::vector<QGraphicsPixmapItem*>(100);
     tiles_textures_ = std::vector<QPixmap>(4);
@@ -36,10 +37,10 @@ void BoardView::drawBoard() {
     }
 }
 
-void BoardView::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
     for (int i = 0; i < tiles_.size(); i++) {
-        if (tiles_[i]->isSelected()) {
-            board_.shoot(i);
+        if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
+            if(board_.shootable(i)) board_.shoot(i);
             tiles_[i]->setSelected(false);
         }
     }
