@@ -14,14 +14,18 @@ class SetupView : public QGraphicsScene
 public:
     SetupView(QObject *parent = 0);
     void drawSetup();
+    void updateSetup();
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 
 private:
     QGraphicsScene* scene_;
     std::vector<SetupItem*> items_;
     std::vector<QPixmap> setup_textures_;
+
+signals:
+    void sendFamily(int length);
 };
 
 #endif // SETUPVIEW_H

@@ -12,7 +12,8 @@
 
 SetupItem::SetupItem(int length, QPixmap texture, QObject *parent)
     :  QObject(parent),
-       length_(length)
+       length_(length),
+       is_set_(false)
 {
     this->setPixmap(texture);
 }
@@ -21,6 +22,10 @@ int SetupItem::getLength() {
     return length_;
 }
 
-bool isSet() {
-    return isSet();
+void SetupItem::set(bool b) {
+    is_set_ = b;
+}
+
+bool SetupItem::isSet() {
+    return is_set_;
 }

@@ -17,6 +17,7 @@ public:
     bool shootable(int);
     int getTileStatus(int);
     bool isPlayerBoard();
+    void placeRandomly(int);
     void setupCPUBoard();
 private:
     std::vector<Tile*> tiles_;

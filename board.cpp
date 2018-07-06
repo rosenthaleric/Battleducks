@@ -86,49 +86,26 @@ bool Board::isPlayerBoard() {
     return is_player_board_;
 }
 
-// randomly places duckfamilies on cpu board
-void Board::setupCPUBoard() {
+void Board::placeRandomly(int length) {
     std::random_device rd;
     std::mt19937 e2(rd());
     std::uniform_real_distribution<float> dist(0, 100);
     bool placeable = false;
     int index;
 
-    // 1x5
     while(!placeable) {
         index = std::floor(dist(e2));
-        if(isPlaceable(index, 5)) placeable = true;
+        if(isPlaceable(index, length)) placeable = true;
     }
-    setDuck(index, 5);
-    placeable = false;
+    setDuck(index, length);
+}
 
-    // 2x4
-    for(int i=0; i<2; ++i) {
-        while(!placeable) {
-            index = std::floor(dist(e2));
-            if(isPlaceable(index, 4)) placeable = true;
-        }
-        setDuck(index, 4);
-        placeable = false;
-    }
-
-    // 3x3
-    for(int i=0; i<3; ++i) {
-        while(!placeable) {
-            index = std::floor(dist(e2));
-            if(isPlaceable(index, 3)) placeable = true;
-        }
-        setDuck(index, 3);
-        placeable = false;
-    }
-
-    // 4x2
-    for(int i=0; i<4; ++i) {
-        while(!placeable) {
-            index = std::floor(dist(e2));
-            if(isPlaceable(index, 2)) placeable = true;
-        }
-        setDuck(index, 2);
-        placeable = false;
+// randomly places duckfamilies on cpu board
+void Board::setupCPUBoard() {
+    for(int i = 0; i<10; i++) {
+        if(i == 0) placeRandomly(5);
+        else if(i < 3) placeRandomly(4);
+        else if(i < 6) placeRandomly(3);
+        else placeRandomly(2);
     }
 }

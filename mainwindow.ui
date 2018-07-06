@@ -23,6 +23,9 @@
       <height>281</height>
      </rect>
     </property>
+    <property name="lineWidth">
+     <number>2</number>
+    </property>
    </widget>
    <widget class="QGraphicsView" name="graphicsView_2">
     <property name="geometry">

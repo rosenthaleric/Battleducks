@@ -11,7 +11,6 @@
 
 /**
  * Responsible for drawing the tiles of a board to a given scene.
- * TODO callbacks and Signals
  */
 
 BoardView::BoardView(QObject *parent, Board* board)
@@ -42,6 +41,7 @@ void BoardView::drawBoard() {
     }
 }
 
+// shooting on enemy board
 void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
     if(!board_->isPlayerBoard()) {
         for (int i = 0; i < tiles_.size(); i++) {
@@ -52,4 +52,10 @@ void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
         }
         drawBoard();
     }
+}
+
+// receiver slot for signal from the player setup to place a family
+void BoardView::receiveFamily(int length) {
+    board_->placeRandomly(length);
+    drawBoard();
 }

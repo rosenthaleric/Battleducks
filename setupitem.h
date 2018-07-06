@@ -13,6 +13,7 @@ class SetupItem : public QObject, public QGraphicsPixmapItem
 public:
     SetupItem(int length, QPixmap texture, QObject *parent = 0);
     int getLength();
+    void set(bool isSet);
     bool isSet();
 
 private:

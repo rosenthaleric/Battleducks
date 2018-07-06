@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "boardview.h"
-#include "setupview.h".h"
+#include "setupview.h"
 #include <QGraphicsView>
 #include <QGraphicsScene>
 
@@ -28,6 +28,9 @@ MainWindow::MainWindow(QWidget *parent) :
     SetupView* setup_view = new SetupView(this);
     setup_view->drawSetup();
     ui->graphicsView_3->setScene(setup_view);
+
+    // SETUP-BOARD CONNECTION
+    QObject::connect(setup_view, SIGNAL(sendFamily(int)), board_view_player, SLOT(receiveFamily(int)));
 
 }
 
