@@ -24,6 +24,8 @@ BoardView::BoardView(QObject *parent, Board* board)
     tiles_textures_ = std::vector<QPixmap>(4);
     tiles_textures_[0] = QPixmap(":/resources/assets/water_tile.jpg").scaled(QSize(25, 25));
     tiles_textures_[2] = QPixmap(":/resources/assets/water_tile_destroyed.jpg").scaled(QSize(25, 25));
+    tiles_textures_[1] = QPixmap(":/resources/assets/duck_tile.png").scaled(QSize(25, 25));
+    tiles_textures_[3] = QPixmap(":/resources/assets/duck_tile_destroyed.png").scaled(QSize(25, 25));
 }
 
 // draw a board // per row, left to right
@@ -31,7 +33,7 @@ void BoardView::drawBoard() {
     this->clear();
     for(int y = 0; y < 10; y++) {
         for(int x = 0; x < 10; x++) {
-         int i = board_->getTileStatus(x, y);
+         int i = board_->getTileStatus(x + y * 10);
          QGraphicsPixmapItem *tile = this->addPixmap(tiles_textures_[i]);
          tile->moveBy(27*x, 27*y);
          tile->setFlags(QGraphicsItem::ItemIsSelectable);

@@ -9,6 +9,7 @@
  *  the duckFamily is destroyed.
  */
 
+// start = first index of duck-coordinates of the family, left to right
 DuckFamily::DuckFamily(int start, int l) : length_(l),  coords_(length_) {
     for(int i = 0; i < length_; i++) {
         coords_[i] = start + i;

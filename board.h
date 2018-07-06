@@ -11,12 +11,13 @@ class Board
 {
 public:
     Board(bool is_player_board);
-    bool check(int, int);
+    bool isPlaceable(int, int);
     void setDuck(int, int);
     void shoot(int);
     bool shootable(int);
-    int getTileStatus(int, int);
+    int getTileStatus(int);
     bool isPlayerBoard();
+    void setupCPUBoard();
 private:
     std::vector<Tile*> tiles_;
     std::set<DuckFamily*> duckFamilies_;

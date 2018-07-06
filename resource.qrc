@@ -2,5 +2,7 @@
     <qresource prefix="/resources">
         <file>assets/water_tile.jpg</file>
         <file>assets/water_tile_destroyed.jpg</file>
+        <file>assets/duck_tile.png</file>
+        <file>assets/duck_tile_destroyed.png</file>
     </qresource>
 </RCC>

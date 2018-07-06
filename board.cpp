@@ -2,6 +2,7 @@
 #include "tile.h"
 #include "duckfamily.h"
 #include <iostream>
+#include <random>
 
 #include <vector>
 #include <set>
@@ -21,13 +22,17 @@
 Board::Board(bool is_player)
     : is_player_board_(is_player)
 {
+    // initiate tiles
     for(int i = 0; i < 100; i++) {
         Tile* tile = new Tile(0);
         tiles_.push_back(tile);
     }
+
+    if(!is_player_board_) setupCPUBoard();
 }
 
-bool Board::check(int index, int length){
+// check wether duckfamily of certain lenght can be horizontally placed on board
+bool Board::isPlaceable(int index, int length){
     // check if index is in board
     if(index > 99 || index < 0) return false;
     //  check if start index and end index would be on same row
@@ -49,9 +54,10 @@ void Board::setDuck(int index, int length) {
     }
 }
 
-int Board::getTileStatus(int x, int y) {
-    return tiles_[x + y * 10]->getStatus();
+int Board::getTileStatus(int i) {
+    return tiles_[i]->getStatus();
 }
+
 bool Board::shootable(int index) {
     // check if index is in board
     if(index > 99 || index < 0) return false;
@@ -73,4 +79,47 @@ void Board::shoot(int index) {
 
 bool Board::isPlayerBoard() {
     return is_player_board_;
+}
+
+// randomly places duckfamilies on cpu board
+void Board::setupCPUBoard() {
+    std::random_device rd;
+    std::mt19937 e2(rd());
+    std::uniform_real_distribution<float> dist(0, 100);
+    bool placeable = false;
+    int index;
+
+    // 4x2
+    for(int i=0; i<4; ++i) {
+        while(!placeable) {
+            index = std::floor(dist(e2));
+            if(isPlaceable(index, 2)) placeable = true;
+        }
+        setDuck(index, 2);
+        placeable = false;
+    }
+    // 3x3
+    for(int i=0; i<3; ++i) {
+        while(!placeable) {
+            index = std::floor(dist(e2));
+            if(isPlaceable(index, 3)) placeable = true;
+        }
+        setDuck(index, 3);
+        placeable = false;
+    }
+    // 2x4
+    for(int i=0; i<2; ++i) {
+        while(!placeable) {
+            index = std::floor(dist(e2));
+            if(isPlaceable(index, 4)) placeable = true;
+        }
+        setDuck(index, 4);
+        placeable = false;
+    }
+    // 1x5
+    while(!placeable) {
+        index = std::floor(dist(e2));
+        if(isPlaceable(index, 5)) placeable = true;
+    }
+    setDuck(index, 5);
 }

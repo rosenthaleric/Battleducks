@@ -33,5 +33,6 @@ DuckFamily* Tile::getDuck() {
 
 DuckFamily* Tile::shootDuck() {
     duck_->popDuck(index_);
+    setStatus(3);
     return duck_;
 }
