@@ -15,8 +15,11 @@
  * TODO callbacks and Signals
  */
 
-BoardView::BoardView(QObject *parent) : QGraphicsScene(parent) {
-    board_ = Board();
+BoardView::BoardView(QObject *parent, Board* board)
+    : QGraphicsScene(parent),
+      board_(board)
+{
+    //board_ = Board();
     tiles_ = std::vector<QGraphicsPixmapItem*>(100);
     tiles_textures_ = std::vector<QPixmap>(4);
     tiles_textures_[0] = QPixmap(":/resources/assets/water_tile.jpg").scaled(QSize(25, 25));
@@ -28,7 +31,7 @@ void BoardView::drawBoard() {
     this->clear();
     for(int y = 0; y < 10; y++) {
         for(int x = 0; x < 10; x++) {
-         int i = board_.getTileStatus(x, y);
+         int i = board_->getTileStatus(x, y);
          QGraphicsPixmapItem *tile = this->addPixmap(tiles_textures_[i]);
          tile->moveBy(27*x, 27*y);
          tile->setFlags(QGraphicsItem::ItemIsSelectable);
@@ -38,11 +41,13 @@ void BoardView::drawBoard() {
 }
 
 void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
-    for (int i = 0; i < tiles_.size(); i++) {
-        if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
-            if(board_.shootable(i)) board_.shoot(i);
-            tiles_[i]->setSelected(false);
+    if(!board_->isPlayerBoard()) {
+        for (int i = 0; i < tiles_.size(); i++) {
+            if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
+                if(board_->shootable(i)) board_->shoot(i);
+                tiles_[i]->setSelected(false);
+            }
         }
+        drawBoard();
     }
-    drawBoard();
 }

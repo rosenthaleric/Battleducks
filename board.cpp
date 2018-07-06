@@ -18,7 +18,9 @@
  * from the boards duck container, relevant for the game progress.
  */
 
-Board::Board(){
+Board::Board(bool is_player)
+    : is_player_board_(is_player)
+{
     for(int i = 0; i < 100; i++) {
         Tile* tile = new Tile(0);
         tiles_.push_back(tile);
@@ -67,4 +69,8 @@ void Board::shoot(int index) {
     if(duckFamily->isDestroyed()) {
         duckFamilies_.erase(duckFamily);
     }
+}
+
+bool Board::isPlayerBoard() {
+    return is_player_board_;
 }

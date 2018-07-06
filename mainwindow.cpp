@@ -12,8 +12,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // CONFIG
-    BoardView* board_view_player = new BoardView(this);
-    BoardView* board_view_cpu = new BoardView(this);
+    Board* board_player = new Board(true);
+    Board* board_cpu = new Board(false);
+    BoardView* board_view_player = new BoardView(this, board_player);
+    BoardView* board_view_cpu = new BoardView(this, board_cpu);
 
     // DRAW EMPTY BOARD
     board_view_player->drawBoard();

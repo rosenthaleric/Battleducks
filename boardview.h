@@ -12,7 +12,7 @@ class BoardView : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    BoardView(QObject *parent = 0);
+    BoardView(QObject *parent = 0, Board* board = 0);
     void drawBoard();
 
 protected:
@@ -20,7 +20,7 @@ protected:
 
 private:
     QGraphicsScene* scene_;
-    Board board_;
+    Board* board_;
     std::vector<QPixmap> tiles_textures_;
     std::vector<QGraphicsPixmapItem*> tiles_;
 };
