@@ -90,14 +90,15 @@ void Board::placeRandomly(int length) {
     std::random_device rd;
     std::mt19937 e2(rd());
     std::uniform_real_distribution<float> dist(0, 100);
-    bool placeable = false;
     int index;
 
-    while(!placeable) {
+    while(true) {
         index = std::floor(dist(e2));
-        if(isPlaceable(index, length)) placeable = true;
+        if(isPlaceable(index, length)) {
+            setDuck(index, length);
+            break;
+        }
     }
-    setDuck(index, length);
 }
 
 // randomly places duckfamilies on cpu board
