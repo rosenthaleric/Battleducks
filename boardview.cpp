@@ -34,6 +34,8 @@ void BoardView::drawBoard() {
     for(int y = 0; y < 10; y++) {
         for(int x = 0; x < 10; x++) {
          int i = board_->getTileStatus(x + y * 10);
+
+         if (!board_->isPlayerBoard() && i == 1) i = 0;
          QGraphicsPixmapItem *tile = this->addPixmap(tiles_textures_[i]);
          tile->moveBy(27*x, 27*y);
          tile->setFlags(QGraphicsItem::ItemIsSelectable);

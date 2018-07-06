@@ -97,7 +97,6 @@ void Board::setupCPUBoard() {
     // 1x5
     while(!placeable) {
         index = std::floor(dist(e2));
-        std::cout << index << std::endl;
         if(isPlaceable(index, 5)) placeable = true;
     }
     setDuck(index, 5);
@@ -107,7 +106,6 @@ void Board::setupCPUBoard() {
     for(int i=0; i<2; ++i) {
         while(!placeable) {
             index = std::floor(dist(e2));
-            std::cout << index << std::endl;
             if(isPlaceable(index, 4)) placeable = true;
         }
         setDuck(index, 4);
@@ -118,7 +116,6 @@ void Board::setupCPUBoard() {
     for(int i=0; i<3; ++i) {
         while(!placeable) {
             index = std::floor(dist(e2));
-            std::cout << index << std::endl;
             if(isPlaceable(index, 3)) placeable = true;
         }
         setDuck(index, 3);
@@ -129,7 +126,6 @@ void Board::setupCPUBoard() {
     for(int i=0; i<4; ++i) {
         while(!placeable) {
             index = std::floor(dist(e2));
-            std::cout << index << std::endl;
             if(isPlaceable(index, 2)) placeable = true;
         }
         setDuck(index, 2);
