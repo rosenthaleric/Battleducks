@@ -17,8 +17,8 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>380</y>
+      <x>60</x>
+      <y>300</y>
       <width>281</width>
       <height>281</height>
      </rect>
@@ -27,35 +27,33 @@
    <widget class="QGraphicsView" name="graphicsView_2">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>60</x>
       <y>10</y>
       <width>281</width>
       <height>281</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QGraphicsView" name="graphicsView_3">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>300</y>
-      <width>381</width>
-      <height>61</height>
+      <x>60</x>
+      <y>580</y>
+      <width>281</width>
+      <height>91</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Comic Sans MS</family>
-      <pointsize>36</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
+    <property name="cursor" stdset="0">
+     <cursorShape>ArrowCursor</cursorShape>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
-    <property name="text">
-     <string>BATLLEDUCKS!!!</string>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
     </property>
    </widget>
   </widget>

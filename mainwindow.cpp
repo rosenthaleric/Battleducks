@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "boardView.h"
+#include "boardview.h"
+#include "setupview.h".h"
 #include <QGraphicsView>
 #include <QGraphicsScene>
 
@@ -11,17 +12,23 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // CONFIG
+    // BOARD CONFIGS
     Board* board_player = new Board(true);
     Board* board_cpu = new Board(false);
     BoardView* board_view_player = new BoardView(this, board_player);
     BoardView* board_view_cpu = new BoardView(this, board_cpu);
 
-    // DRAW EMPTY BOARD
+    // DRAW EMPTY BOARDS
     board_view_player->drawBoard();
     board_view_cpu->drawBoard();
     ui->graphicsView->setScene(board_view_player);
     ui->graphicsView_2->setScene(board_view_cpu);
+
+    // SETUP CONFIG
+    SetupView* setup_view = new SetupView(this);
+    setup_view->drawSetup();
+    ui->graphicsView_3->setScene(setup_view);
+
 }
 
 MainWindow::~MainWindow()

@@ -6,7 +6,6 @@
 #include <QPixmap>
 #include <QGraphicsSceneMouseEvent>
 #include <iostream>
-
 #include "board.h"
 #include "boardView.h"
 
@@ -19,7 +18,6 @@ BoardView::BoardView(QObject *parent, Board* board)
     : QGraphicsScene(parent),
       board_(board)
 {
-    //board_ = Board();
     tiles_ = std::vector<QGraphicsPixmapItem*>(100);
     tiles_textures_ = std::vector<QPixmap>(4);
     tiles_textures_[0] = QPixmap(":/resources/assets/water_tile.jpg").scaled(QSize(25, 25));

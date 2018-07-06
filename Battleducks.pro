@@ -29,7 +29,9 @@ SOURCES += \
     board.cpp \
     tile.cpp \
     boardview.cpp \
-    duckfamily.cpp
+    duckfamily.cpp \
+    setupview.cpp \
+    setupitem.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -37,7 +39,9 @@ HEADERS += \
     tile.h \
     boardview.h \
     duckfamily.h \
-    game.h
+    game.h \
+    setupview.h \
+    setupitem.h
 
 FORMS += \
         mainwindow.ui
