@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     board_view_cpu->drawBoard();
     ui->graphicsView->setScene(board_view_player);
     ui->graphicsView_2->setScene(board_view_cpu);
+    ui->graphicsView->setMouseTracking(true);
 
     // SETUP CONFIG
     SetupView* setup_view = new SetupView(this);

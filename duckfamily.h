@@ -8,6 +8,7 @@ class DuckFamily
 public:
     DuckFamily(int start, int l);
 
+    int getLength();
     void popDuck(int pos);
     bool contains(int i);
     bool isDestroyed();

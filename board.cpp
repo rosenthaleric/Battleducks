@@ -36,7 +36,7 @@ bool Board::isPlaceable(int index, int length){
     // check if index is in board
     if(index > 99 || index < 0) return false;
     //  check if start index and end index would be on same row
-    if(index / 10 != (index + length) / 10) return false;
+    if(index / 10 != (index + length - 1) / 10) return false;
     for(int i = index; i < index + length; i++) {
         if(tiles_[i]->getStatus() != 0) return false;
         //check space between families
@@ -61,6 +61,10 @@ void Board::setDuckFamily(int index, int length) {
 
 std::set<DuckFamily*> Board::getDuckFamilies() {
     return duckFamilies_;
+}
+
+int Board::getLengthAtTile(int i) {
+    return tiles_[i]->getDuckFamily()->getLength();
 }
 
 int Board::getTileStatus(int i) {

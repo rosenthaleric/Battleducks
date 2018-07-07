@@ -17,12 +17,16 @@ public:
 
 protected:
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 
 private:
     QGraphicsScene* scene_;
     Board* board_;
     std::vector<QPixmap> tiles_textures_;
     std::vector<QGraphicsPixmapItem*> tiles_;
+    bool previewMode_;
+    int movableLength_;
+    int previewStartIndex_;
 
 public slots:
     void receiveFamily(int length);

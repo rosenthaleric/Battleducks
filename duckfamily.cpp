@@ -17,6 +17,10 @@ DuckFamily::DuckFamily(int start, int l) : length_(l),  coords_(length_), destro
     }
 }
 
+int DuckFamily::getLength() {
+    return length_;
+}
+
 // erase a hit duck coordinate from the family coords_ array
 void DuckFamily::popDuck(int pos) {
     for(int i = 0; i < length_; i++) {

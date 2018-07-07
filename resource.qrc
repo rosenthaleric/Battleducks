@@ -8,5 +8,8 @@
         <file>assets/family3x.png</file>
         <file>assets/family4x.png</file>
         <file>assets/family5x.png</file>
+        <file>assets/placeable_watertile.jpg</file>
+        <file>assets/nonplaceable_watertile.jpg</file>
+        <file>assets/nonplaceable_duck_tile.png</file>
     </qresource>
 </RCC>
