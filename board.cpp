@@ -39,11 +39,11 @@ bool Board::isPlaceable(int index, int length){
     if(index / 10 != (index + length - 1) / 10) return false;
     for(int i = index; i < index + length; i++) {
         if(tiles_[i]->getStatus() != 0) return false;
-        //check space between families
-        if(i-1 >= 0)  if(tiles_[i-1]->getStatus() != 0) return false;       // left
-        if(i+1 < 100)  if(tiles_[i+1]->getStatus() != 0) return false;      // right
-        if(i-10 >= 0)  if(tiles_[i-10]->getStatus() != 0) return false;     // above
-        if(i+10 < 100)  if(tiles_[i+10]->getStatus() != 0) return false;    // below
+        //check space between families (horizontally only when they're in the same row)
+        if(i-1 >= 0)  if(tiles_[i-1]->getStatus() != 0 && (i-1) / 10 == i / 10) return false;       // left
+        if(i+1 < 100)  if(tiles_[i+1]->getStatus() != 0 && (i+1) / 10 == i / 10) return false;      // right
+        if(i-10 >= 0)  if(tiles_[i-10]->getStatus() != 0) return false;                             // above
+        if(i+10 < 100)  if(tiles_[i+10]->getStatus() != 0) return false;                            // below
     }
     return true;
 }
