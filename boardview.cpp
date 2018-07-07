@@ -19,6 +19,7 @@ BoardView::BoardView(QObject *parent, Board* board)
     : QGraphicsScene(parent),
       board_(board),
       previewMode_(false),
+      placeablePreview_(false),
       movableLength_(0),
       previewStartIndex_(0)
 {
@@ -51,12 +52,16 @@ void BoardView::drawBoard() {
          int i;
 
          /**
-           * If the preview mode is enabled and a duck is placeable at the cursor,
-           * the specified preview texture is loaded. Start and end of the preview tile sequence
-           * is dependant on the aforeset previewStartIndex and movableLength. MovableLength gets
-           * decremented during the loop to mark the end of the tile preview.
+           * If the preview mode is enabled the specified preview texture is loaded. Start and end of the
+           * preview tile sequenceis dependant on the aforeset previewStartIndex and movableLength. MovableLength gets
+           * decremented during the loop to mark the end of the tile preview. Red or Green is determined by the
+           * placeablePreview flag.
            */
-         if(previewMode_ && x+y*10 >= previewStartIndex_ && movableLength_ > 0) i = 4;
+         if(previewMode_ && x+y*10 >= previewStartIndex_ && movableLength_ > 0 && placeablePreview_) i = 4;
+         else if(previewMode_ && x+y*10 >= previewStartIndex_ && movableLength_ > 0 && !placeablePreview_) {
+             if(board_->getTileStatus(x + y * 10) == 0) i = 5;
+             if(board_->getTileStatus(x + y * 10) == 1) i = 6;
+         }
          else i = board_->getTileStatus(x + y * 10);
 
          if (!board_->isPlayerBoard() && i == 1) i = 0;
@@ -65,7 +70,7 @@ void BoardView::drawBoard() {
          tile->setFlags(QGraphicsItem::ItemIsSelectable);
          tiles_.at(x + y * 10) = tile;
 
-         if(i == 4) movableLength_--;
+         if(i == 4 || i == 5 || i == 6) movableLength_--;
         }
     }
 }
@@ -99,8 +104,23 @@ void BoardView::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
         int length = movableLength_;
         for (int i = 0; i < tiles_.size(); i++) {
             if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
+
+                // DRAW GREEN PREVIEW TILES
                 if(board_->isPlaceable(i, length)) {
+                    placeablePreview_ = true;
                     previewStartIndex_ = i;
+                    drawBoard();
+                    movableLength_ = length;    // resets movableLength as it gets decremented while drawing
+                }
+
+                // DRAW RED PREVIEW TILES
+                else {
+                    placeablePreview_ = false;
+                    previewStartIndex_ = i;
+                    // prevent drawing red tiles across two rows
+                    while(previewStartIndex_ / 10 != (previewStartIndex_ + movableLength_ - 1) / 10) {
+                        movableLength_--;
+                    }
                     drawBoard();
                     movableLength_ = length;    // resets movableLength as it gets decremented while drawing
                 }

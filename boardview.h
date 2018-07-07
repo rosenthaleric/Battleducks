@@ -24,7 +24,9 @@ private:
     Board* board_;
     std::vector<QPixmap> tiles_textures_;
     std::vector<QGraphicsPixmapItem*> tiles_;
+
     bool previewMode_;
+    bool placeablePreview_;
     int movableLength_;
     int previewStartIndex_;
 
