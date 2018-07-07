@@ -6,7 +6,7 @@
  *  A tile either has a duck or is neutral, represented by its status.
  */
 
-Tile::Tile(int s) : status_(s) {}
+Tile::Tile(int s, int i) : status_(s), index_(i) {}
 
 int Tile::getStatus() {
     return status_;
@@ -23,16 +23,17 @@ void Tile::setStatus(int newStatus) {
     status_ = newStatus;
 }
 
-void Tile::setDuck(DuckFamily* newDuck) {
-    duck_ = newDuck;
+
+void Tile::setDuckFamily(DuckFamily* duckFam) {
+    duckFam_ = duckFam;
 }
 
-DuckFamily* Tile::getDuck() {
-    return duck_;
+DuckFamily* Tile::getDuckFamily() {
+    return duckFam_;
 }
 
 DuckFamily* Tile::shootDuck() {
-    duck_->popDuck(index_);
+    duckFam_->popDuck(index_);
     setStatus(3);
-    return duck_;
+    return duckFam_;
 }

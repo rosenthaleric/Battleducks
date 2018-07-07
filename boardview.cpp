@@ -6,6 +6,8 @@
 #include <QPixmap>
 #include <QGraphicsSceneMouseEvent>
 #include <iostream>
+#include <set>
+#include "duckfamily.h"
 #include "board.h"
 #include "boardView.h"
 
@@ -28,6 +30,14 @@ BoardView::BoardView(QObject *parent, Board* board)
 // draw a board // per row, left to right
 void BoardView::drawBoard() {
     this->clear();
+
+    /*
+     * for checking family count on board
+    std::set<DuckFamily*> list = board_->getDuckFamilies();
+    int count = 0;
+    for(auto* duck : list) std::cout << count++ << std::endl;
+    */
+
     for(int y = 0; y < 10; y++) {
         for(int x = 0; x < 10; x++) {
          int i = board_->getTileStatus(x + y * 10);

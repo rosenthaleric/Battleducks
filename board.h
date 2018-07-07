@@ -12,7 +12,8 @@ class Board
 public:
     Board(bool is_player_board);
     bool isPlaceable(int, int);
-    void setDuck(int, int);
+    void setDuckFamily(int, int);
+    std::set<DuckFamily*> getDuckFamilies();
     void shoot(int);
     bool shootable(int);
     int getTileStatus(int);

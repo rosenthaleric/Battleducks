@@ -24,7 +24,7 @@ Board::Board(bool is_player)
 {
     // initiate tiles
     for(int i = 0; i < 100; i++) {
-        Tile* tile = new Tile(0);
+        Tile* tile = new Tile(0, i);
         tiles_.push_back(tile);
     }
 
@@ -48,15 +48,19 @@ bool Board::isPlaceable(int index, int length){
     return true;
 }
 
-void Board::setDuck(int index, int length) {
+void Board::setDuckFamily(int index, int length) {
+    DuckFamily* duckFam = new DuckFamily(index, length);
     for(int i = index; i < index + length; i++) {
         Tile* tile = tiles_[i];
         // set status to duck
         tile->setStatus(1);
-        DuckFamily* duck = new DuckFamily(index, length);
-        duckFamilies_.insert(duck);
-        tile->setDuck(duck);
+        tile->setDuckFamily(duckFam);
     }
+    duckFamilies_.insert(duckFam);
+}
+
+std::set<DuckFamily*> Board::getDuckFamilies() {
+    return duckFamilies_;
 }
 
 int Board::getTileStatus(int i) {
@@ -95,7 +99,7 @@ void Board::placeRandomly(int length) {
     while(true) {
         index = std::floor(dist(e2));
         if(isPlaceable(index, length)) {
-            setDuck(index, length);
+            setDuckFamily(index, length);
             break;
         }
     }

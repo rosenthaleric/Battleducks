@@ -1,5 +1,6 @@
 #include "duckfamily.h"
 #include <vector>
+#include <iostream>
 
 /**
  *  Represents a duckfamily with a length of 2 to 5 tiles/ducks.
@@ -10,7 +11,7 @@
  */
 
 // start = first index of duck-coordinates of the family, left to right
-DuckFamily::DuckFamily(int start, int l) : length_(l),  coords_(length_) {
+DuckFamily::DuckFamily(int start, int l) : length_(l),  coords_(length_), destroyed_(false) {
     for(int i = 0; i < length_; i++) {
         coords_[i] = start + i;
     }
