@@ -18,6 +18,7 @@ public:
 protected:
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
 private:
     QGraphicsScene* scene_;
@@ -29,6 +30,8 @@ private:
     bool placeablePreview_;
     int movableLength_;
     int previewStartIndex_;
+    int oldDuckIndex_;
+    int oldDuckLength_;
 
 public slots:
     void receiveFamily(int length);

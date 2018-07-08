@@ -11,5 +11,6 @@
         <file>assets/placeable_watertile.jpg</file>
         <file>assets/nonplaceable_watertile.jpg</file>
         <file>assets/nonplaceable_duck_tile.png</file>
+        <file>assets/duck_tile_bw.png</file>
     </qresource>
 </RCC>

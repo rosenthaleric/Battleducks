@@ -11,10 +11,14 @@
  */
 
 // start = first index of duck-coordinates of the family, left to right
-DuckFamily::DuckFamily(int start, int l) : length_(l),  coords_(length_), destroyed_(false) {
+DuckFamily::DuckFamily(int start, int l) : start_(start), length_(l),  coords_(length_), destroyed_(false) {
     for(int i = 0; i < length_; i++) {
         coords_[i] = start + i;
     }
+}
+
+int DuckFamily::getStart() {
+    return start_;
 }
 
 int DuckFamily::getLength() {

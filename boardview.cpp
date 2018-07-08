@@ -21,10 +21,12 @@ BoardView::BoardView(QObject *parent, Board* board)
       previewMode_(false),
       placeablePreview_(false),
       movableLength_(0),
-      previewStartIndex_(0)
+      previewStartIndex_(0),
+      oldDuckIndex_(0),
+      oldDuckLength_(0)
 {
     tiles_ = std::vector<QGraphicsPixmapItem*>(100);
-    tiles_textures_ = std::vector<QPixmap>(7);
+    tiles_textures_ = std::vector<QPixmap>(8);
     tiles_textures_[0] = QPixmap(":/resources/assets/water_tile.jpg").scaled(QSize(25, 25));
     tiles_textures_[2] = QPixmap(":/resources/assets/water_tile_destroyed.jpg").scaled(QSize(25, 25));
     tiles_textures_[1] = QPixmap(":/resources/assets/duck_tile.png").scaled(QSize(25, 25));
@@ -34,18 +36,17 @@ BoardView::BoardView(QObject *parent, Board* board)
     tiles_textures_[4] = QPixmap(":/resources/assets/placeable_watertile.jpg").scaled(QSize(25, 25));
     tiles_textures_[5] = QPixmap(":/resources/assets/nonplaceable_watertile.jpg").scaled(QSize(25, 25));
     tiles_textures_[6] = QPixmap(":/resources/assets/nonplaceable_duck_tile.png").scaled(QSize(25, 25));
+    tiles_textures_[7] = QPixmap(":/resources/assets/duck_tile_bw.png").scaled(QSize(25, 25));
 }
 
 // draw a board // per row, left to right
 void BoardView::drawBoard() {
     this->clear();
 
-    /*
     //for checking family count on board
-    std::set<DuckFamily*> list = board_->getDuckFamilies();
-    int count = 0;
-    for(auto* duck : list) std::cout << count++ << std::endl;
-    */
+    if (board_->isPlayerBoard()) {
+        std::cout << board_->getDuckFamilies().size() << std::endl;
+    }
 
     for(int y = 0; y < 10; y++) {
         for(int x = 0; x < 10; x++) {
@@ -53,14 +54,16 @@ void BoardView::drawBoard() {
 
          /**
            * If the preview mode is enabled the specified preview texture is loaded. Start and end of the
-           * preview tile sequenceis dependant on the aforeset previewStartIndex and movableLength. MovableLength gets
-           * decremented during the loop to mark the end of the tile preview. Red or Green is determined by the
-           * placeablePreview flag.
+           * preview tile sequence is dependant on the aforeset previewStartIndex and movableLength. Red or Green
+           * is determined by the placeablePreview flag. The clicked duckfamily is always gray.
            */
-         if(previewMode_ && x+y*10 >= previewStartIndex_ && movableLength_ > 0 && placeablePreview_) i = 4;
-         else if(previewMode_ && x+y*10 >= previewStartIndex_ && movableLength_ > 0 && !placeablePreview_) {
-             if(board_->getTileStatus(x + y * 10) == 0) i = 5;
-             if(board_->getTileStatus(x + y * 10) == 1) i = 6;
+         if(previewMode_ && x+y*10 >= oldDuckIndex_ && x+y*10 < oldDuckIndex_ + oldDuckLength_) i = 7;  // gray duck
+         else if(previewMode_ && x+y*10 >= previewStartIndex_
+                 && x+y*10 < previewStartIndex_ + movableLength_ && placeablePreview_) i = 4;  //green water
+         else if(previewMode_ && x+y*10 >= previewStartIndex_
+                 && x+y*10 < previewStartIndex_ + movableLength_ && !placeablePreview_) {
+             if(board_->getTileStatus(x + y * 10) == 0) i = 5;  // red water
+             if(board_->getTileStatus(x + y * 10) == 1) i = 6;  // red duck
          }
          else i = board_->getTileStatus(x + y * 10);
 
@@ -69,8 +72,6 @@ void BoardView::drawBoard() {
          tile->moveBy(27*x, 27*y);
          tile->setFlags(QGraphicsItem::ItemIsSelectable);
          tiles_.at(x + y * 10) = tile;
-
-         if(i == 4 || i == 5 || i == 6) movableLength_--;
         }
     }
 }
@@ -90,7 +91,9 @@ void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
             for (int i = 0; i < tiles_.size(); i++) {
                 if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
                     if(board_->getTileStatus(i) == 1) {
-                        movableLength_ = board_->getLengthAtTile(i);
+                        movableLength_ = board_->getFamilyLength(i);
+                        oldDuckIndex_ = board_->getFamilyStart(i);
+                        oldDuckLength_ = movableLength_;
                         previewMode_ = true;
                     }
                 }
@@ -110,7 +113,6 @@ void BoardView::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
                     placeablePreview_ = true;
                     previewStartIndex_ = i;
                     drawBoard();
-                    movableLength_ = length;    // resets movableLength as it gets decremented while drawing
                 }
 
                 // DRAW RED PREVIEW TILES
@@ -122,10 +124,29 @@ void BoardView::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
                         movableLength_--;
                     }
                     drawBoard();
-                    movableLength_ = length;    // resets movableLength as it gets decremented while drawing
+                    movableLength_ = length;    // reset movableLength_ as it gets decremented above
                 }
             }
         }
+    }
+}
+
+// in previewMode: place a new duck if possible or leave previewMode and everything stays the same
+void BoardView::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+    if(previewMode_ && event->button() == Qt::LeftButton) {
+        if(!board_->isPlaceable(previewStartIndex_, oldDuckLength_)) {
+            previewMode_ = false;
+        }
+        else {
+            previewMode_ = false;
+            board_->removeDuckFamily(oldDuckIndex_, oldDuckLength_);
+            board_->setDuckFamily(previewStartIndex_, oldDuckLength_);
+        }
+        movableLength_ = 0;
+        previewStartIndex_ = 0;
+        oldDuckIndex_ = 0;
+        oldDuckLength_ = 0;
+        drawBoard();
     }
 }
 

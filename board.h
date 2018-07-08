@@ -13,8 +13,10 @@ public:
     Board(bool is_player_board);
     bool isPlaceable(int, int);
     void setDuckFamily(int, int);
+    void removeDuckFamily(int, int);
     std::set<DuckFamily*> getDuckFamilies();
-    int getLengthAtTile(int);
+    int getFamilyStart(int);
+    int getFamilyLength(int);
     void shoot(int);
     bool shootable(int);
     int getTileStatus(int);
