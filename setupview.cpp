@@ -80,3 +80,18 @@ void SetupView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
         }
     }
 }
+
+/*
+ * receiver SLOT for signal from boardview, taking set duckfamily off
+ * the board and back to setupView
+ */
+void SetupView::retakeFamily(int length) {
+    for (auto* item : items_) {
+        if(item->isSet() && item->getLength() == length) {
+            item->set(false);
+            this->addItem(item); // readd item to !SCENE!
+            break;
+        }
+    }
+    updateSetup();
+}

@@ -26,6 +26,9 @@ private:
 
 signals:
     void sendFamily(int length);
+
+public slots:
+    void retakeFamily(int length);
 };
 
 #endif // SETUPVIEW_H

@@ -148,6 +148,17 @@ void BoardView::mousePressEvent(QGraphicsSceneMouseEvent* event) {
         oldDuckLength_ = 0;
         drawBoard();
     }
+    else if(board_->isPlayerBoard() && event->button() == Qt::RightButton) {
+        for (int i = 0; i < tiles_.size(); i++) {
+            if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
+                if(board_->getTileStatus(i) == 1) {
+                    emit returnFamily(board_->getFamilyLength(i));
+                    board_->removeDuckFamily(board_->getFamilyStart(i), board_->getFamilyLength(i));
+                    drawBoard();
+                }
+            }
+        }
+    }
 }
 
 // receiver slot for signal from the player setup to place a family

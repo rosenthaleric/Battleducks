@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // SETUP-BOARD CONNECTION
     QObject::connect(setup_view, SIGNAL(sendFamily(int)), board_view_player, SLOT(receiveFamily(int)));
+    QObject::connect(board_view_player, SIGNAL(returnFamily(int)), setup_view, SLOT(retakeFamily(int)));
 
 }
 

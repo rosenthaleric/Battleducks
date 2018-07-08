@@ -33,6 +33,9 @@ private:
     int oldDuckIndex_;
     int oldDuckLength_;
 
+signals:
+    void returnFamily(int length);
+
 public slots:
     void receiveFamily(int length);
 };
