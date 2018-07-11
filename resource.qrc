@@ -12,5 +12,10 @@
         <file>assets/nonplaceable_watertile.jpg</file>
         <file>assets/nonplaceable_duck_tile.png</file>
         <file>assets/duck_tile_bw.png</file>
+        <file>assets/quack0.mp3</file>
+        <file>assets/duckstroll.mp3</file>
+        <file>assets/quack1.mp3</file>
+        <file>assets/quack3.mp3</file>
+        <file>assets/quack2.mp3</file>
     </qresource>
 </RCC>

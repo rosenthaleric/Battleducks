@@ -35,6 +35,7 @@ private:
 
 signals:
     void returnFamily(int length);
+    void duckSound();
 
 public slots:
     void receiveFamily(int length);

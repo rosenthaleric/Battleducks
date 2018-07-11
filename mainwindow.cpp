@@ -2,7 +2,10 @@
 #include "ui_mainwindow.h"
 #include "boardview.h"
 #include "setupview.h"
+#include "audio.h"
 #include <QGraphicsView>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 #include <QGraphicsScene>
 
 
@@ -33,6 +36,21 @@ MainWindow::MainWindow(QWidget *parent) :
     // SETUP-BOARD CONNECTION
     QObject::connect(setup_view, SIGNAL(sendFamily(int)), board_view_player, SLOT(receiveFamily(int)));
     QObject::connect(board_view_player, SIGNAL(returnFamily(int)), setup_view, SLOT(retakeFamily(int)));
+
+    // AUDIO CONFIG
+    QMediaPlayer* audio = new Audio(this);
+    QObject::connect(board_view_cpu, SIGNAL(duckSound()), audio, SLOT(playRandom()));
+    QObject::connect(board_view_player, SIGNAL(duckSound()), audio, SLOT(playRandom()));
+
+    // BACKGROUND MUSIC
+    QMediaPlaylist *playlist = new QMediaPlaylist();
+    playlist->addMedia(QUrl("qrc:/resources/assets/duckstroll.mp3"));
+    playlist->setPlaybackMode(QMediaPlaylist::Loop);
+
+    QMediaPlayer *music = new QMediaPlayer();
+    music->setPlaylist(playlist);
+    music->setVolume(5);
+    music->play();
 
 }
 

@@ -90,16 +90,17 @@ bool Board::shootable(int index) {
     return (status == 0 || status == 1);
 }
 
-void Board::shoot(int index) {
+bool Board::shoot(int index) {
     int status = tiles_[index]->getStatus();
     if(status == 0) {
         tiles_[index]->setStatus(2);
-        return;
+        return false;
     }
     DuckFamily* duckFamily = tiles_[index]->shootDuck();
     if(duckFamily->isDestroyed()) {
         duckFamilies_.erase(duckFamily);
     }
+    return true;
 }
 
 bool Board::isPlayerBoard() {

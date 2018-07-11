@@ -17,7 +17,7 @@ public:
     std::set<DuckFamily*> getDuckFamilies();
     int getFamilyStart(int);
     int getFamilyLength(int);
-    void shoot(int);
+    bool shoot(int);
     bool shootable(int);
     int getTileStatus(int);
     bool isPlayerBoard();

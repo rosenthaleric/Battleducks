@@ -12,7 +12,8 @@
 #include "boardView.h"
 
 /**
- * Responsible for drawing the tiles of a board to a given scene.
+ * Responsible for drawing and updating the tiles of a board to a given scene
+ * and handling mouse events and setup signals.
  */
 
 BoardView::BoardView(QObject *parent, Board* board)
@@ -39,7 +40,7 @@ BoardView::BoardView(QObject *parent, Board* board)
     tiles_textures_[7] = QPixmap(":/resources/assets/duck_tile_bw.png").scaled(QSize(25, 25));
 }
 
-// draw a board // per row, left to right
+// DRAWING per row, left to right
 void BoardView::drawBoard() {
     this->clear();
 
@@ -81,7 +82,11 @@ void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
     if(!board_->isPlayerBoard()) {
         for (int i = 0; i < tiles_.size(); i++) {
             if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
-                if(board_->shootable(i)) board_->shoot(i);
+                if(board_->shootable(i)) {
+                    bool shot = board_->shoot(i);
+                    // play duck sound
+                    if(shot) emit duckSound();
+                }
                 tiles_[i]->setSelected(false);
             }
         }
@@ -164,5 +169,6 @@ void BoardView::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 // receiver slot for signal from the player setup to place a family
 void BoardView::receiveFamily(int length) {
     board_->placeRandomly(length);
+    emit duckSound();
     drawBoard();
 }

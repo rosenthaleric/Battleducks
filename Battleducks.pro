@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui \
+            multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -31,7 +32,8 @@ SOURCES += \
     boardview.cpp \
     duckfamily.cpp \
     setupview.cpp \
-    setupitem.cpp
+    setupitem.cpp \
+    audio.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,7 +43,8 @@ HEADERS += \
     duckfamily.h \
     game.h \
     setupview.h \
-    setupitem.h
+    setupitem.h \
+    audio.h
 
 FORMS += \
         mainwindow.ui
