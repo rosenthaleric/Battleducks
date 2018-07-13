@@ -3,10 +3,12 @@
 #include "board.h"
 #include "boardview.h"
 #include <iostream>
-#include <thread>
-#include <chrono>
-Enemy::Enemy(BoardView* bw, Board* b) : bw_(bw),player_board_(b), last_shot_(-1) {
-}
+#include <QTimer>
+
+Enemy::Enemy(QObject* parent, BoardView* bw, Board* b)
+    : QObject(parent),
+      bw_(bw),player_board_(b),
+      last_shot_(-1) {}
 
 void Enemy::shoot() {
     std::random_device rd;
@@ -16,7 +18,7 @@ void Enemy::shoot() {
     int chance = std::floor(dist(e2));
     bool shot;
     int index;
-    if(last_shot_ == -1 || chance < 40) {
+    if(last_shot_ == -1 || chance < 10) {
         index = std::floor(dist(e2));
         while(!player_board_->shootable(index)) {
             index = std::floor(dist(e2));
@@ -41,9 +43,8 @@ void Enemy::shoot() {
         shot = player_board_->shoot(index);
     }
     bw_->enemyAction(shot);
-    std::this_thread::sleep_for(std::chrono::seconds(4));
     if(shot) {
-        shoot();
+        QTimer::singleShot(1000, this, SLOT(shoot()));
     } else {
         last_shot_ = -1;
     }

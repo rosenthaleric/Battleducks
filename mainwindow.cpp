@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     board_player_ = new Board(true, running);
     board_view_player_ = new BoardView(this, board_player_);
     board_cpu_ = new Board(false, running);
-    enemy_ = new Enemy(board_view_player_, board_player_);
+    enemy_ = new Enemy(this, board_view_player_, board_player_);
     board_view_cpu_ = new BoardView(this, board_cpu_);
     board_view_cpu_->setEnemy(enemy_);
     // DRAW EMPTY BOARDS

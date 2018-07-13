@@ -7,6 +7,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <iostream>
 #include <set>
+#include <QTimer>
 #include "duckfamily.h"
 #include "board.h"
 #include "boardView.h"
@@ -72,10 +73,10 @@ void BoardView::drawBoard() {
          if (!board_->isPlayerBoard() && i == 1) i = 0;
          QGraphicsPixmapItem *tile = this->addPixmap(tiles_textures_[i]);
          tile->moveBy(27*x, 27*y);
-         tile->setFlags(QGraphicsItem::ItemIsSelectable);
          tiles_.at(x + y * 10) = tile;
         }
     }
+    update();
 }
 
 // shooting on enemy board
@@ -85,18 +86,16 @@ void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
             if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
                 if(board_->shootable(i)) {
                     bool shot = board_->shoot(i);
-                    // play duck sound
+                    std::cout << "drawing" << std::endl;
+                    drawBoard();
+                    // play duck sound and check if lost // if no duck was shot, enemy shoots
                     if(shot) {
                         emit duckSound();
                         if(board_->getDuckFamilies().empty()) emit cpu_lost();
-                        drawBoard();
                     } else {
-                        std::cout << "is before draw baord" << std::endl;
-                        drawBoard();
-                        enemy_->shoot();
+                         QTimer::singleShot(1000, enemy_, SLOT(shoot()));
                     }
                 }
-                // tiles_[i]->setSelected(false);
             }
         }
     // starting the previewMode to move ducks on players board
@@ -114,16 +113,6 @@ void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
       }
 }
 
-void BoardView::enemyAction(bool b){
-    if(b) {
-    emit duckSound();
-    if(board_->getDuckFamilies().empty()) emit player_lost();
-    }
-    drawBoard();
-}
-void BoardView::setEnemy(Enemy* enemy) {
-    enemy_ = enemy;
-}
 // only fired when previewMode is enabled by doubleclicking on a set duck
 void BoardView::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     if(previewMode_) {
@@ -182,6 +171,19 @@ void BoardView::mousePressEvent(QGraphicsSceneMouseEvent* event) {
             }
         }
     }
+}
+
+// called by enemy, updates board-drawing and checks if enemy shot a duck for sound and loss
+void BoardView::enemyAction(bool shot) {
+    if(shot) {
+        emit duckSound();
+        if(board_->getDuckFamilies().empty()) emit player_lost();
+    }
+    drawBoard();
+}
+
+void BoardView::setEnemy(Enemy* enemy) {
+    enemy_ = enemy;
 }
 
 // receiver slot for signal from the player setup to place a family
