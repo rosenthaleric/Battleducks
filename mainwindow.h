@@ -21,10 +21,15 @@ public:
 private:
     Ui::MainWindow *ui;
     Board* board_player_;
+    Enemy* enemy_;
     Board* board_cpu_;
     BoardView* board_view_player_;
     BoardView* board_view_cpu_;
     SetupView* setup_view_;
+    bool* running_;
+
+public slots:
+    void restart();
 };
 
 #endif // MAINWINDOW_H

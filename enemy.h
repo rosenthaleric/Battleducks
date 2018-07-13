@@ -1,19 +1,17 @@
 #ifndef ENEMY_H
 #define ENEMY_H
-#include <random>
 #include "board.h"
 
+class BoardView;
 class Enemy
 {
 public:
-    Enemy(Board*);
+    Enemy(BoardView* bw, Board* b);
     void shoot();
 
 private:
     int last_shot_;
     Board* player_board_;
-    std::random_device* rd;
-    std::mt19937* e2;
-    std::uniform_real_distribution<float>* dist;
-}
+    BoardView* bw_;
+};
 #endif // ENEMY_H

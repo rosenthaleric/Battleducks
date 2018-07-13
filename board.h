@@ -25,6 +25,8 @@ public:
     void setupCPUBoard();
     bool running();
     void setRunning(bool);
+    void resetDuckfamilies();
+    void resetTiles();
 private:
     std::vector<Tile*> tiles_;
     std::set<DuckFamily*> duckFamilies_;

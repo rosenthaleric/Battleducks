@@ -10,6 +10,7 @@
 #include "duckfamily.h"
 #include "board.h"
 #include "boardView.h"
+#include "enemy.h"
 
 /**
  * Responsible for drawing and updating the tiles of a board to a given scene
@@ -88,14 +89,18 @@ void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
                     if(shot) {
                         emit duckSound();
                         if(board_->getDuckFamilies().empty()) emit cpu_lost();
+                        drawBoard();
+                    } else {
+                        std::cout << "is before draw baord" << std::endl;
+                        drawBoard();
+                        enemy_->shoot();
                     }
                 }
-                tiles_[i]->setSelected(false);
+                // tiles_[i]->setSelected(false);
             }
         }
-        drawBoard();
     // starting the previewMode to move ducks on players board
-    } else if(!board_->running()) {
+    } else if(!board_->running() && board_->isPlayerBoard()) {
             for (int i = 0; i < tiles_.size(); i++) {
                 if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
                     if(board_->getTileStatus(i) == 1) {
@@ -109,6 +114,16 @@ void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
       }
 }
 
+void BoardView::enemyAction(bool b){
+    if(b) {
+    emit duckSound();
+    if(board_->getDuckFamilies().empty()) emit player_lost();
+    }
+    drawBoard();
+}
+void BoardView::setEnemy(Enemy* enemy) {
+    enemy_ = enemy;
+}
 // only fired when previewMode is enabled by doubleclicking on a set duck
 void BoardView::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     if(previewMode_) {
@@ -178,6 +193,10 @@ void BoardView::receiveFamily(int length) {
 
 void BoardView::win() {
     std::cout << "Won!" << std::endl;
+}
+
+void BoardView::lose() {
+    std::cout << "LOST! :-(" << std::endl;
 }
 
 void BoardView::start() {

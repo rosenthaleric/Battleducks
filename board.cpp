@@ -48,6 +48,16 @@ bool Board::isPlaceable(int index, int length){
     return true;
 }
 
+void Board::resetTiles(){
+    for(int i = 0; i < tiles_.size(); i++) {
+        tiles_[i]->setStatus(0);
+    }
+}
+
+void Board::resetDuckfamilies(){
+    duckFamilies_.clear();
+}
+
 void Board::setDuckFamily(int index, int length) {
     DuckFamily* duckFam = new DuckFamily(index, length);
     for(int i = index; i < index + length; i++) {

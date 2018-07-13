@@ -96,9 +96,12 @@ void SetupView::retakeFamily(int length) {
     updateSetup();
 }
 
-bool SetupView::allSet() {
-    for (auto* item : items_) {
-        if(!item->isSet()) return false;
+void SetupView::reset() {
+    for(auto* item : items_) {
+        if(item->isSet()) {
+        item->set(false);
+        this->addItem(item);
+        }
     }
-    return true;
 }
+

@@ -19,13 +19,15 @@ MainWindow::MainWindow(QWidget *parent) :
     // BOARD CONFIGS
     bool* running = new bool(false);
     board_player_ = new Board(true, running);
-    board_cpu_ = new Board(false, running);
     board_view_player_ = new BoardView(this, board_player_);
+    board_cpu_ = new Board(false, running);
+    enemy_ = new Enemy(board_view_player_, board_player_);
     board_view_cpu_ = new BoardView(this, board_cpu_);
-
+    board_view_cpu_->setEnemy(enemy_);
     // DRAW EMPTY BOARDS
     board_view_player_->drawBoard();
     board_view_cpu_->drawBoard();
+
     ui->graphicsView->setScene(board_view_player_);
     ui->graphicsView_2->setScene(board_view_cpu_);
     ui->graphicsView->setMouseTracking(true);
@@ -39,9 +41,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(setup_view_, SIGNAL(sendFamily(int)), board_view_player_, SLOT(receiveFamily(int)));
     QObject::connect(board_view_player_, SIGNAL(returnFamily(int)), setup_view_, SLOT(retakeFamily(int)));
     QObject::connect(board_view_cpu_, SIGNAL(cpu_lost()), board_view_player_, SLOT(win()));
+    QObject::connect(board_view_cpu_, SIGNAL(player_lost()), board_view_player_, SLOT(lose()));
 
     QObject::connect(ui->pushButton, SIGNAL(released()), board_view_player_, SLOT(start()));
     QObject::connect(ui->pushButton, SIGNAL(released()), board_view_cpu_, SLOT(start()));
+    QObject::connect(ui->pushButton_2, SIGNAL(released()), this, SLOT(restart()));
 
     // AUDIO CONFIG
     QMediaPlayer* audio = new Audio(this);
@@ -59,6 +63,22 @@ MainWindow::MainWindow(QWidget *parent) :
     music->play();
 
 }
+
+void MainWindow::restart() {
+    std::cout << "RESET" << std::endl;
+    board_cpu_->resetDuckfamilies();
+    board_cpu_->resetTiles();
+    board_cpu_->setupCPUBoard();
+
+    board_player_->resetDuckfamilies();
+    board_player_->resetTiles();
+    setup_view_->reset();
+    setup_view_->updateSetup();
+    board_cpu_->setRunning(false);
+    board_view_player_->drawBoard();
+    board_view_cpu_->drawBoard();
+}
+
 
 MainWindow::~MainWindow()
 {
