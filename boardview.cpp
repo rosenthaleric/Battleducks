@@ -95,7 +95,7 @@ void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
         }
         drawBoard();
     // starting the previewMode to move ducks on players board
-    } else {
+    } else if(!board_->running()) {
             for (int i = 0; i < tiles_.size(); i++) {
                 if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
                     if(board_->getTileStatus(i) == 1) {
@@ -156,7 +156,7 @@ void BoardView::mousePressEvent(QGraphicsSceneMouseEvent* event) {
         oldDuckLength_ = 0;
         drawBoard();
     }
-    else if(board_->isPlayerBoard() && event->button() == Qt::RightButton) {
+    else if(board_->isPlayerBoard() && event->button() == Qt::RightButton && !board_->running()) {
         for (int i = 0; i < tiles_.size(); i++) {
             if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
                 if(board_->getTileStatus(i) == 1) {
@@ -181,7 +181,7 @@ void BoardView::win() {
 }
 
 void BoardView::start() {
-    if(board_->isPlayerBoard() && board_->getDuckFamilies().size() == 10) {
+    if(!board_->running() && board_->isPlayerBoard() && board_->getDuckFamilies().size() == 10) {
         std::cout << "Start!" << std::endl;
         board_->setRunning(true);
     }
