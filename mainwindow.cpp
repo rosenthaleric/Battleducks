@@ -8,6 +8,7 @@
 #include <QMediaPlaylist>
 #include <QGraphicsScene>
 #include <memory>
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // BOARD CONFIGS
-    std::shared_ptr<bool> running(false);
+    bool* running = new bool(false);
     board_player_ = new Board(true, running);
     board_cpu_ = new Board(false, running);
     board_view_player_ = new BoardView(this, board_player_);

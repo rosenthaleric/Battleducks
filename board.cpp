@@ -19,7 +19,7 @@
  * from the boards duck container, relevant for the game progress.
  */
 
-Board::Board(bool is_player, std::shared_ptr<bool> b)
+Board::Board(bool is_player, bool* b)
     : is_player_board_(is_player), running_(b)
 {
     // initiate tiles
@@ -133,10 +133,10 @@ void Board::setupCPUBoard() {
 }
 
 bool Board::running() {
-    return running_.get();
+    return *running_;
 }
 
 void Board::setRunning(bool b) {
-    running_.get() = b;
+    *running_ = b;
 }
 

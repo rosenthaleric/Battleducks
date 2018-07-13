@@ -10,7 +10,7 @@
 class Board
 {
 public:
-    Board(bool is_player_board, std::shared_ptr<bool> b);
+    Board(bool is_player_board, bool* b);
     bool isPlaceable(int, int);
     void setDuckFamily(int, int);
     void removeDuckFamily(int, int);
@@ -29,6 +29,6 @@ private:
     std::vector<Tile*> tiles_;
     std::set<DuckFamily*> duckFamilies_;
     bool is_player_board_;
-    std::shared_ptr<bool> running_;
+    bool* running_;
 };
 #endif // BOARD_H
