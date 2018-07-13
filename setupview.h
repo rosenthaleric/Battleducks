@@ -15,6 +15,7 @@ public:
     SetupView(QObject *parent = 0);
     void drawSetup();
     void updateSetup();
+    bool allSet();
 
 protected:
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);

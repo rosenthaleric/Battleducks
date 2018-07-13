@@ -23,9 +23,12 @@ public:
     bool isPlayerBoard();
     void placeRandomly(int);
     void setupCPUBoard();
+    bool running();
+    void setRunning(bool);
 private:
     std::vector<Tile*> tiles_;
     std::set<DuckFamily*> duckFamilies_;
     bool is_player_board_;
+    bool running_;
 };
 #endif // BOARD_H

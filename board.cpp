@@ -20,7 +20,7 @@
  */
 
 Board::Board(bool is_player)
-    : is_player_board_(is_player)
+    : is_player_board_(is_player), running_(false)
 {
     // initiate tiles
     for(int i = 0; i < 100; i++) {
@@ -131,3 +131,12 @@ void Board::setupCPUBoard() {
         else placeRandomly(2);
     }
 }
+
+bool Board::running() {
+    return running_;
+}
+
+void Board::setRunning(bool b) {
+    running_ = b;
+}
+

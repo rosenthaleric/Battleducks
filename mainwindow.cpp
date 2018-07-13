@@ -16,31 +16,32 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // BOARD CONFIGS
-    Board* board_player = new Board(true);
-    Board* board_cpu = new Board(false);
-    BoardView* board_view_player = new BoardView(this, board_player);
-    BoardView* board_view_cpu = new BoardView(this, board_cpu);
+    board_player_ = new Board(true);
+    board_cpu_ = new Board(false);
+    board_view_player_ = new BoardView(this, board_player_);
+    board_view_cpu_ = new BoardView(this, board_cpu_);
 
     // DRAW EMPTY BOARDS
-    board_view_player->drawBoard();
-    board_view_cpu->drawBoard();
-    ui->graphicsView->setScene(board_view_player);
-    ui->graphicsView_2->setScene(board_view_cpu);
+    board_view_player_->drawBoard();
+    board_view_cpu_->drawBoard();
+    ui->graphicsView->setScene(board_view_player_);
+    ui->graphicsView_2->setScene(board_view_cpu_);
     ui->graphicsView->setMouseTracking(true);
 
     // SETUP CONFIG
-    SetupView* setup_view = new SetupView(this);
-    setup_view->drawSetup();
-    ui->graphicsView_3->setScene(setup_view);
+    setup_view_ = new SetupView(this);
+    setup_view_->drawSetup();
+    ui->graphicsView_3->setScene(setup_view_);
 
     // SETUP-BOARD CONNECTION
-    QObject::connect(setup_view, SIGNAL(sendFamily(int)), board_view_player, SLOT(receiveFamily(int)));
-    QObject::connect(board_view_player, SIGNAL(returnFamily(int)), setup_view, SLOT(retakeFamily(int)));
+    QObject::connect(setup_view_, SIGNAL(sendFamily(int)), board_view_player_, SLOT(receiveFamily(int)));
+    QObject::connect(board_view_player_, SIGNAL(returnFamily(int)), setup_view_, SLOT(retakeFamily(int)));
+    QObject::connect(board_view_cpu_, SIGNAL(cpu_lost()), board_view_player_, SLOT(win()));
 
     // AUDIO CONFIG
     QMediaPlayer* audio = new Audio(this);
-    QObject::connect(board_view_cpu, SIGNAL(duckSound()), audio, SLOT(playRandom()));
-    QObject::connect(board_view_player, SIGNAL(duckSound()), audio, SLOT(playRandom()));
+    QObject::connect(board_view_cpu_, SIGNAL(duckSound()), audio, SLOT(playRandom()));
+    QObject::connect(board_view_player_, SIGNAL(duckSound()), audio, SLOT(playRandom()));
 
     // BACKGROUND MUSIC
     QMediaPlaylist *playlist = new QMediaPlaylist();

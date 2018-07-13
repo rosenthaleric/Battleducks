@@ -79,13 +79,16 @@ void BoardView::drawBoard() {
 
 // shooting on enemy board
 void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
-    if(!board_->isPlayerBoard()) {
+    if(!board_->isPlayerBoard() && board_->running()) {
         for (int i = 0; i < tiles_.size(); i++) {
             if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
                 if(board_->shootable(i)) {
                     bool shot = board_->shoot(i);
                     // play duck sound
-                    if(shot) emit duckSound();
+                    if(shot) {
+                        emit duckSound();
+                        if(board_->getDuckFamilies().empty()) emit cpu_lost();
+                    }
                 }
                 tiles_[i]->setSelected(false);
             }
@@ -171,4 +174,8 @@ void BoardView::receiveFamily(int length) {
     board_->placeRandomly(length);
     emit duckSound();
     drawBoard();
+}
+
+void BoardView::win() {
+    std::cout << "Won!" << std::endl;
 }

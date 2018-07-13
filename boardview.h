@@ -36,9 +36,11 @@ private:
 signals:
     void returnFamily(int length);
     void duckSound();
+    void cpu_lost();
 
 public slots:
     void receiveFamily(int length);
+    void win();
 };
 
 #endif // BOARDVIEW_H

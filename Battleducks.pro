@@ -41,7 +41,6 @@ HEADERS += \
     tile.h \
     boardview.h \
     duckfamily.h \
-    game.h \
     setupview.h \
     setupitem.h \
     audio.h

@@ -95,3 +95,10 @@ void SetupView::retakeFamily(int length) {
     }
     updateSetup();
 }
+
+bool SetupView::allSet() {
+    for (auto* item : items_) {
+        if(!item->isSet()) return false;
+    }
+    return true;
+}
