@@ -33,7 +33,8 @@ SOURCES += \
     duckfamily.cpp \
     setupview.cpp \
     setupitem.cpp \
-    audio.cpp
+    audio.cpp \
+    enemy.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -43,7 +44,8 @@ HEADERS += \
     duckfamily.h \
     setupview.h \
     setupitem.h \
-    audio.h
+    audio.h \
+    enemy.h
 
 FORMS += \
         mainwindow.ui

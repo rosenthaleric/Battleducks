@@ -41,6 +41,7 @@ signals:
 public slots:
     void receiveFamily(int length);
     void win();
+    void start();
 };
 
 #endif // BOARDVIEW_H

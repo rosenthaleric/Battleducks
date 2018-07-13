@@ -19,8 +19,8 @@
  * from the boards duck container, relevant for the game progress.
  */
 
-Board::Board(bool is_player)
-    : is_player_board_(is_player), running_(false)
+Board::Board(bool is_player, std::shared_ptr<bool> b)
+    : is_player_board_(is_player), running_(b)
 {
     // initiate tiles
     for(int i = 0; i < 100; i++) {
@@ -133,10 +133,10 @@ void Board::setupCPUBoard() {
 }
 
 bool Board::running() {
-    return running_;
+    return running_.get();
 }
 
 void Board::setRunning(bool b) {
-    running_ = b;
+    running_.get() = b;
 }
 

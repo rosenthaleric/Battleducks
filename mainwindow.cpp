@@ -7,7 +7,7 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QGraphicsScene>
-
+#include <memory>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,8 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // BOARD CONFIGS
-    board_player_ = new Board(true);
-    board_cpu_ = new Board(false);
+    std::shared_ptr<bool> running(false);
+    board_player_ = new Board(true, running);
+    board_cpu_ = new Board(false, running);
     board_view_player_ = new BoardView(this, board_player_);
     board_view_cpu_ = new BoardView(this, board_cpu_);
 
@@ -37,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(setup_view_, SIGNAL(sendFamily(int)), board_view_player_, SLOT(receiveFamily(int)));
     QObject::connect(board_view_player_, SIGNAL(returnFamily(int)), setup_view_, SLOT(retakeFamily(int)));
     QObject::connect(board_view_cpu_, SIGNAL(cpu_lost()), board_view_player_, SLOT(win()));
+
+    QObject::connect(ui->pushButton, SIGNAL(released()), board_view_player_, SLOT(start()));
+    QObject::connect(ui->pushButton, SIGNAL(released()), board_view_cpu_, SLOT(start()));
 
     // AUDIO CONFIG
     QMediaPlayer* audio = new Audio(this);
