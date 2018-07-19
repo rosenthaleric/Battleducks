@@ -18,9 +18,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // BOARD CONFIGS
     bool* running = new bool(false);
-    board_player_ = new Board(true, running);
+    int* mode = new int(0);
+    board_player_ = new Board(true, running, mode);
     board_view_player_ = new BoardView(this, board_player_);
-    board_cpu_ = new Board(false, running);
+    board_cpu_ = new Board(false, running, mode);
     enemy_ = new Enemy(this, board_view_player_, board_player_);
     board_view_cpu_ = new BoardView(this, board_cpu_);
     board_view_cpu_->setEnemy(enemy_);
@@ -51,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMediaPlayer* audio = new Audio(this);
     QObject::connect(board_view_cpu_, SIGNAL(duckSound()), audio, SLOT(playRandom()));
     QObject::connect(board_view_player_, SIGNAL(duckSound()), audio, SLOT(playRandom()));
+    QObject::connect(board_view_cpu_, SIGNAL(player_lost()), audio, SLOT(play_lose_sound()));
+    QObject::connect(board_view_cpu_, SIGNAL(cpu_lost()), audio, SLOT(play_win_sound()));
 
     // BACKGROUND MUSIC
     QMediaPlaylist *playlist = new QMediaPlaylist();
@@ -69,12 +72,12 @@ void MainWindow::restart() {
     board_cpu_->resetDuckfamilies();
     board_cpu_->resetTiles();
     board_cpu_->setupCPUBoard();
-
     board_player_->resetDuckfamilies();
     board_player_->resetTiles();
     setup_view_->reset();
     setup_view_->updateSetup();
     board_cpu_->setRunning(false);
+    board_cpu_->setMode(0);
     board_view_player_->drawBoard();
     board_view_cpu_->drawBoard();
 }

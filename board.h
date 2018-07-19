@@ -10,7 +10,7 @@
 class Board
 {
 public:
-    Board(bool is_player_board, bool* b);
+    Board(bool is_player_board, bool* b, int* m);
     bool isPlaceable(int, int);
     void setDuckFamily(int, int);
     void removeDuckFamily(int, int);
@@ -27,10 +27,18 @@ public:
     void setRunning(bool);
     void resetDuckfamilies();
     void resetTiles();
+    int mode();
+    void setMode(int);
+
 private:
     std::vector<Tile*> tiles_;
     std::set<DuckFamily*> duckFamilies_;
     bool is_player_board_;
     bool* running_;
+    // game status in mode
+    // 0 -> setup
+    // 1 -> running
+    // 2 -> pause
+    int* mode_;
 };
 #endif // BOARD_H

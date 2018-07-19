@@ -11,6 +11,10 @@ Enemy::Enemy(QObject* parent, BoardView* bw, Board* b)
       last_shot_(-1) {}
 
 void Enemy::shoot() {
+    if(player_board_->mode() != 2) {
+        std::cout << "modus falsch" << std::endl;
+        return;
+    }
     std::random_device rd;
     std::mt19937 e2(rd());
     std::uniform_real_distribution<float> dist(0, 100);
@@ -24,7 +28,6 @@ void Enemy::shoot() {
             index = std::floor(dist(e2));
         }
         shot = player_board_->shoot(index);
-        if(shot) last_shot_ = index;
     } else {
         if(last_shot_ / 10 == (last_shot_ - 1) / 10 && player_board_->shootable(last_shot_ - 1)) index = last_shot_ - 1;
         else if(last_shot_ / 10 == (last_shot_ + 1) / 10 && player_board_->shootable(last_shot_ + 1)) index = last_shot_ + 1;
@@ -37,15 +40,19 @@ void Enemy::shoot() {
         else if(last_shot_ / 10 == (last_shot_ + 5) / 10 && player_board_->shootable(last_shot_ + 5)) index = last_shot_ + 5;
         else {
             last_shot_ = -1;
-            shoot();
-            return;
+            index = std::floor(dist(e2));
+            while(!player_board_->shootable(index)) {
+                index = std::floor(dist(e2));
+            }
         }
         shot = player_board_->shoot(index);
     }
+    last_shot_ = index;
     bw_->enemyAction(shot);
     if(shot) {
-        QTimer::singleShot(1000, this, SLOT(shoot()));
+        QTimer::singleShot(500, this, SLOT(shoot()));
     } else {
         last_shot_ = -1;
+        player_board_->setMode(1);
     }
 }
