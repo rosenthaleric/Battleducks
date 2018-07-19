@@ -81,7 +81,7 @@ void BoardView::drawBoard() {
 
 // shooting on enemy board
 void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
-    if(!board_->isPlayerBoard() && board_->running()) {
+    if(!board_->isPlayerBoard() && board_->mode() == 1) {
         for (int i = 0; i < tiles_.size(); i++) {
             if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
                 if(board_->shootable(i)) {
@@ -93,13 +93,15 @@ void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
                         emit duckSound();
                         if(board_->getDuckFamilies().empty()) emit cpu_lost();
                     } else {
-                         QTimer::singleShot(1000, enemy_, SLOT(shoot()));
+                        board_->setMode(2);
+                        std::cout << "setMode to 2 : " << board_->mode() << std::endl;
+                        QTimer::singleShot(1000, enemy_, SLOT(shoot()));
                     }
                 }
             }
         }
     // starting the previewMode to move ducks on players board
-    } else if(!board_->running() && board_->isPlayerBoard()) {
+    } else if(board_->mode() == 0 && board_->isPlayerBoard()) {
             for (int i = 0; i < tiles_.size(); i++) {
                 if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
                     if(board_->getTileStatus(i) == 1) {
@@ -160,7 +162,7 @@ void BoardView::mousePressEvent(QGraphicsSceneMouseEvent* event) {
         oldDuckLength_ = 0;
         drawBoard();
     }
-    else if(board_->isPlayerBoard() && event->button() == Qt::RightButton && !board_->running()) {
+    else if(board_->isPlayerBoard() && event->button() == Qt::RightButton && board_->mode() == 0) {
         for (int i = 0; i < tiles_.size(); i++) {
             if (tiles_[i]->sceneBoundingRect().contains(event->scenePos())) {
                 if(board_->getTileStatus(i) == 1) {
@@ -195,15 +197,32 @@ void BoardView::receiveFamily(int length) {
 
 void BoardView::win() {
     std::cout << "Won!" << std::endl;
+    board_->setMode(2);
+    colorTiles(4);
+    update();
 }
 
 void BoardView::lose() {
     std::cout << "LOST! :-(" << std::endl;
+    board_->setMode(2);
+    colorTiles(5);
+    update();
+}
+
+void BoardView::colorTiles(int i) {
+    for(int x = 0; x < 10; x++) {
+        for(int y = 0; y < 10; y++) {
+            QGraphicsPixmapItem *tile = this->addPixmap(tiles_textures_[i]);
+            tile->moveBy(27 * x, 27 * y);
+            tiles_.at(x + y * 10) = tile;
+        }
+    }
 }
 
 void BoardView::start() {
-    if(!board_->running() && board_->isPlayerBoard() && board_->getDuckFamilies().size() == 10) {
+    if(board_->mode() == 0 && board_->isPlayerBoard() && board_->getDuckFamilies().size() == 10) {
         std::cout << "Start!" << std::endl;
         board_->setRunning(true);
+        board_->setMode(1);
     }
 }

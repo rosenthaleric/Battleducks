@@ -19,8 +19,8 @@
  * from the boards duck container, relevant for the game progress.
  */
 
-Board::Board(bool is_player, bool* b)
-    : is_player_board_(is_player), running_(b)
+Board::Board(bool is_player, bool* b, int* m)
+    : is_player_board_(is_player), running_(b), mode_(m)
 {
     // initiate tiles
     for(int i = 0; i < 100; i++) {
@@ -29,6 +29,10 @@ Board::Board(bool is_player, bool* b)
     }
 
     if(!is_player_board_) setupCPUBoard();
+}
+
+int Board::mode() {
+    return *mode_;
 }
 
 // check wether duckfamily of certain lenght can be horizontally placed on board
@@ -142,6 +146,9 @@ void Board::setupCPUBoard() {
     }
 }
 
+void Board::setMode(int i) {
+    *mode_ = i;
+}
 bool Board::running() {
     return *running_;
 }

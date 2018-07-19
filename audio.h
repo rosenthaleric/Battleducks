@@ -14,6 +14,8 @@ private:
 
 public slots:
     void playRandom();
+    void play_win_sound();
+    void play_lose_sound();
 };
 
 #endif // AUDIO_H

@@ -35,6 +35,7 @@ private:
     int oldDuckIndex_;
     int oldDuckLength_;
     Enemy* enemy_;
+    void colorTiles(int);
 
 signals:
     void returnFamily(int length);

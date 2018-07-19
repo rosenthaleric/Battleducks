@@ -17,5 +17,7 @@
         <file>assets/quack1.mp3</file>
         <file>assets/quack3.mp3</file>
         <file>assets/quack2.mp3</file>
+        <file>assets/lose.mp3</file>
+        <file>assets/win.mp3</file>
     </qresource>
 </RCC>
