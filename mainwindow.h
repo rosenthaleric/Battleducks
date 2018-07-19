@@ -27,7 +27,6 @@ private:
     BoardView* board_view_player_;
     BoardView* board_view_cpu_;
     SetupView* setup_view_;
-    bool* running_;
     QMediaPlayer* music_;
 
 public slots:

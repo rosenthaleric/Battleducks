@@ -18,11 +18,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // BOARD CONFIGS
-    bool* running = new bool(false);
     int* mode = new int(0);
-    board_player_ = new Board(true, running, mode);
+    board_player_ = new Board(true, mode);
     board_view_player_ = new BoardView(this, board_player_);
-    board_cpu_ = new Board(false, running, mode);
+    board_cpu_ = new Board(false,mode);
     enemy_ = new Enemy(this, board_view_player_, board_player_);
     board_view_cpu_ = new BoardView(this, board_cpu_);
     board_view_cpu_->setEnemy(enemy_);
@@ -80,7 +79,6 @@ void MainWindow::restart() {
     board_player_->resetTiles();
     setup_view_->reset();
     setup_view_->updateSetup();
-    board_cpu_->setRunning(false);
     board_cpu_->setMode(0);
     board_view_player_->drawBoard();
     board_view_cpu_->drawBoard();

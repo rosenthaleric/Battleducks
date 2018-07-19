@@ -229,7 +229,6 @@ void BoardView::colorTiles(int i) {
 void BoardView::start() {
     if(board_->mode() == 0 && board_->isPlayerBoard() && board_->getDuckFamilies().size() == 10) {
         std::cout << "Start!" << std::endl;
-        board_->setRunning(true);
         board_->setMode(1);
     }
 }
