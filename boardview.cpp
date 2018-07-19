@@ -76,7 +76,6 @@ void BoardView::drawBoard() {
          tiles_.at(x + y * 10) = tile;
         }
     }
-    update();
 }
 
 // shooting on enemy board
@@ -94,6 +93,7 @@ void BoardView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
                         if(board_->getDuckFamilies().empty()) emit cpu_lost();
                     } else {
                         board_->setMode(2);
+                        emit blankSound();
                         std::cout << "setMode to 2 : " << board_->mode() << std::endl;
                         QTimer::singleShot(1000, enemy_, SLOT(shoot()));
                     }
@@ -181,7 +181,9 @@ void BoardView::enemyAction(bool shot) {
         emit duckSound();
         if(board_->getDuckFamilies().empty()) emit player_lost();
     }
-    drawBoard();
+    else emit blankSound();
+    // only draw when game is not over
+    if(!board_->getDuckFamilies().empty()) drawBoard();
 }
 
 void BoardView::setEnemy(Enemy* enemy) {
@@ -190,26 +192,31 @@ void BoardView::setEnemy(Enemy* enemy) {
 
 // receiver slot for signal from the player setup to place a family
 void BoardView::receiveFamily(int length) {
-    board_->placeRandomly(length);
-    emit duckSound();
-    drawBoard();
+    bool set = board_->placeRandomly(length);
+    if(set) {
+        emit duckSound();
+        drawBoard();
+    }
+    else {
+        emit returnFamily(length);
+        emit blankSound();
+    }
 }
 
 void BoardView::win() {
     std::cout << "Won!" << std::endl;
     board_->setMode(2);
     colorTiles(4);
-    update();
 }
 
 void BoardView::lose() {
     std::cout << "LOST! :-(" << std::endl;
     board_->setMode(2);
     colorTiles(5);
-    update();
 }
 
 void BoardView::colorTiles(int i) {
+    this->clear();
     for(int x = 0; x < 10; x++) {
         for(int y = 0; y < 10; y++) {
             QGraphicsPixmapItem *tile = this->addPixmap(tiles_textures_[i]);

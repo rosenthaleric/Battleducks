@@ -73,9 +73,9 @@ void SetupView::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) {
     for (int i = 0; i < items_.size(); i++) {
         // check for mousepos/itempos and whether item has already been set on the board
         if (items_[i]->sceneBoundingRect().contains(event->scenePos()) && !items_[i]->isSet()) {
-            emit sendFamily(items_[i]->getLength());    // firing signal to boardView
             items_.at(i)->set(true);
             updateSetup();
+            emit sendFamily(items_[i]->getLength());    // firing signal to boardView
             return;
         }
     }

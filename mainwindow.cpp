@@ -7,6 +7,7 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QGraphicsScene>
+#include <QTimer>
 #include <memory>
 #include <iostream>
 
@@ -42,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(setup_view_, SIGNAL(sendFamily(int)), board_view_player_, SLOT(receiveFamily(int)));
     QObject::connect(board_view_player_, SIGNAL(returnFamily(int)), setup_view_, SLOT(retakeFamily(int)));
     QObject::connect(board_view_cpu_, SIGNAL(cpu_lost()), board_view_player_, SLOT(win()));
-    QObject::connect(board_view_cpu_, SIGNAL(player_lost()), board_view_player_, SLOT(lose()));
+    QObject::connect(board_view_player_, SIGNAL(player_lost()), board_view_player_, SLOT(lose()));
 
     QObject::connect(ui->pushButton, SIGNAL(released()), board_view_player_, SLOT(start()));
     QObject::connect(ui->pushButton, SIGNAL(released()), board_view_cpu_, SLOT(start()));
@@ -52,19 +53,22 @@ MainWindow::MainWindow(QWidget *parent) :
     QMediaPlayer* audio = new Audio(this);
     QObject::connect(board_view_cpu_, SIGNAL(duckSound()), audio, SLOT(playRandom()));
     QObject::connect(board_view_player_, SIGNAL(duckSound()), audio, SLOT(playRandom()));
-    QObject::connect(board_view_cpu_, SIGNAL(player_lost()), audio, SLOT(play_lose_sound()));
+    QObject::connect(board_view_player_, SIGNAL(player_lost()), audio, SLOT(play_lose_sound()));
     QObject::connect(board_view_cpu_, SIGNAL(cpu_lost()), audio, SLOT(play_win_sound()));
+    QObject::connect(board_view_player_, SIGNAL(blankSound()), audio, SLOT(play_blank()));
+    QObject::connect(board_view_cpu_, SIGNAL(blankSound()), audio, SLOT(play_blank()));
 
     // BACKGROUND MUSIC
     QMediaPlaylist *playlist = new QMediaPlaylist();
     playlist->addMedia(QUrl("qrc:/resources/assets/duckstroll.mp3"));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
-    QMediaPlayer *music = new QMediaPlayer();
-    music->setPlaylist(playlist);
-    music->setVolume(5);
-    music->play();
+    music_ = new QMediaPlayer();
+    music_->setPlaylist(playlist);
+    music_->setVolume(4);
+    music_->play();
 
+    QObject::connect(audio, SIGNAL(stopMusic()), this, SLOT(interruptSong()));
 }
 
 void MainWindow::restart() {
@@ -86,4 +90,13 @@ void MainWindow::restart() {
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::interruptSong() {
+    music_->stop();
+    QTimer::singleShot(5400, this, SLOT(continueSong()));
+}
+
+void MainWindow::continueSong() {
+    music_->play();
 }

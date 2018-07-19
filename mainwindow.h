@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMediaPlayer>
 #include "board.h"
 #include "boardview.h"
 #include "setupview.h"
@@ -27,9 +28,12 @@ private:
     BoardView* board_view_cpu_;
     SetupView* setup_view_;
     bool* running_;
+    QMediaPlayer* music_;
 
 public slots:
     void restart();
+    void interruptSong();
+    void continueSong();
 };
 
 #endif // MAINWINDOW_H

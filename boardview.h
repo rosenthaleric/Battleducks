@@ -40,6 +40,7 @@ private:
 signals:
     void returnFamily(int length);
     void duckSound();
+    void blankSound();
     void cpu_lost();
     void player_lost();
 

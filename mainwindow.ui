@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>395</width>
-    <height>783</height>
+    <width>400</width>
+    <height>782</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,8 +64,8 @@
      <rect>
       <x>60</x>
       <y>680</y>
-      <width>131</width>
-      <height>51</height>
+      <width>141</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -75,10 +75,10 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>200</x>
       <y>680</y>
-      <width>111</width>
-      <height>51</height>
+      <width>141</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -91,8 +91,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>395</width>
-     <height>20</height>
+     <width>400</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuBattleducks">
