@@ -21,7 +21,7 @@ public:
     bool shootable(int);
     int getTileStatus(int);
     bool isPlayerBoard();
-    void placeRandomly(int);
+    bool placeRandomly(int);
     void setupCPUBoard();
     bool running();
     void setRunning(bool);

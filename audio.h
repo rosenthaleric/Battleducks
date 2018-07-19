@@ -14,8 +14,12 @@ private:
 
 public slots:
     void playRandom();
+    void play_blank();
     void play_win_sound();
     void play_lose_sound();
+
+signals:
+    void stopMusic();
 };
 
 #endif // AUDIO_H

@@ -22,7 +22,7 @@ void Enemy::shoot() {
     int chance = std::floor(dist(e2));
     bool shot;
     int index;
-    if(last_shot_ == -1 || chance < 10) {
+    if(last_shot_ == -1) {
         index = std::floor(dist(e2));
         while(!player_board_->shootable(index)) {
             index = std::floor(dist(e2));
@@ -49,9 +49,9 @@ void Enemy::shoot() {
     }
     last_shot_ = index;
     bw_->enemyAction(shot);
-    if(shot) {
+    if(shot && !player_board_->getDuckFamilies().empty()) {
         QTimer::singleShot(500, this, SLOT(shoot()));
-    } else {
+    } else if(!player_board_->getDuckFamilies().empty()) {
         last_shot_ = -1;
         player_board_->setMode(1);
     }

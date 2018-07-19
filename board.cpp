@@ -121,19 +121,21 @@ bool Board::isPlayerBoard() {
     return is_player_board_;
 }
 
-void Board::placeRandomly(int length) {
+bool Board::placeRandomly(int length) {
     std::random_device rd;
     std::mt19937 e2(rd());
     std::uniform_real_distribution<float> dist(0, 100);
     int index;
+    int i = 0;
 
-    while(true) {
+    while(i++ < 500) {
         index = std::floor(dist(e2));
         if(isPlaceable(index, length)) {
             setDuckFamily(index, length);
-            break;
+            return true;
         }
     }
+    return false;
 }
 
 // randomly places duckfamilies on cpu board

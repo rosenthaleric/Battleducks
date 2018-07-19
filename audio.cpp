@@ -13,6 +13,7 @@ Audio::Audio(QObject *parent)
     sounds_->addMedia(QUrl("qrc:/resources/assets/quack3.mp3"));
     sounds_->addMedia(QUrl("qrc:/resources/assets/win.mp3"));
     sounds_->addMedia(QUrl("qrc:/resources/assets/lose.mp3"));
+    sounds_->addMedia(QUrl("qrc:/resources/assets/error.mp3"));
     this->setVolume(10);
 }
 
@@ -27,8 +28,21 @@ void Audio::playRandom() {
 
 void Audio::play_win_sound() {
     this->setMedia(sounds_->media(4));
+    this->setVolume(100);
+    emit stopMusic();
+    this->play();
+    this->setVolume(10);
 }
 
 void Audio::play_lose_sound() {
     this->setMedia(sounds_->media(5));
+    this->setVolume(50);
+    emit stopMusic();
+    this->play();
+    this->setVolume(10);
+}
+
+void Audio::play_blank() {
+    this->setMedia(sounds_->media(6));
+    this->play();
 }
