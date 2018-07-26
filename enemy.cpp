@@ -31,9 +31,9 @@ void Enemy::shoot() {
         if(last_shot_ / 10 == (last_shot_ - 1) / 10 && player_board_->shootable(last_shot_ - 1)) index = last_shot_ - 1;
         else if(last_shot_ / 10 == (last_shot_ + 1) / 10 && player_board_->shootable(last_shot_ + 1)) index = last_shot_ + 1;
         else if(last_shot_ / 10 == (last_shot_ - 2) / 10 && player_board_->shootable(last_shot_ - 2)) index = last_shot_ - 2;
-        else if(last_shot_ / 10 == (last_shot_ + 3) / 10 && player_board_->shootable(last_shot_ + 3)) index = last_shot_ + 2;
+        else if(last_shot_ / 10 == (last_shot_ + 2) / 10 && player_board_->shootable(last_shot_ + 2)) index = last_shot_ + 2;
         else if(last_shot_ / 10 == (last_shot_ - 3) / 10 && player_board_->shootable(last_shot_ - 3)) index = last_shot_ - 3;
-        else if(last_shot_ / 10 == (last_shot_ - 3) / 10 && player_board_->shootable(last_shot_ - 3)) index = last_shot_ + 3;
+        else if(last_shot_ / 10 == (last_shot_ + 3) / 10 && player_board_->shootable(last_shot_ + 3)) index = last_shot_ + 3;
         else if(last_shot_ / 10 == (last_shot_ - 4) / 10 && player_board_->shootable(last_shot_ - 4)) index = last_shot_ - 4;
         else if(last_shot_ / 10 == (last_shot_ + 4) / 10 && player_board_->shootable(last_shot_ + 4)) index = last_shot_ + 4;
         else if(last_shot_ / 10 == (last_shot_ - 5) / 10 && player_board_->shootable(last_shot_ - 5)) index = last_shot_ - 5;
