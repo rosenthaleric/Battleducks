@@ -1,4 +1,4 @@
-![ScreenShot](https://raw.github.com/rosenthaleric/Battleducks/master/assets/screenshot.png)
+![ScreenShot](https://raw.github.com/rosenthaleric/Battleducks/master/assets/screenshot.PNG)
 
 Battleducks
 ===========
